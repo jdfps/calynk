@@ -1,0 +1,24 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="256" height="256" rx="48" fill="#0B1220"></rect>
+
+  <!-- Boxy C -->
+  <path d="
+      M180 70
+      H100
+      Q70 70 70 100
+      V156
+      Q70 186 100 186
+      H180
+    " fill="none" stroke="#60A5FA" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"></path>
+
+  <!-- Optional inner cut (gives depth) -->
+  <path d="
+      M165 95
+      H110
+      Q95 95 95 110
+      V146
+      Q95 161 110 161
+      H165
+    " fill="none" stroke="#1E3A8A" stroke-width="8" opacity="0.4" stroke-linecap="round"></path>
+</svg>

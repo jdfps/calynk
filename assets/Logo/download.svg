@@ -1,0 +1,21 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60A5FA"></stop>
+      <stop offset="100%" stop-color="#3B82F6"></stop>
+    </linearGradient>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="128" cy="128" r="120" fill="#0F172A"></circle>
+
+  <!-- Spiral C shape -->
+  <path d="
+    M180,80
+    A70,70 0 1,0 180,176
+    A40,40 0 1,1 180,80
+  " fill="none" stroke="url(#grad)" stroke-width="18" stroke-linecap="round"></path>
+
+  <!-- Inner connection dot -->
+  <circle cx="180" cy="80" r="8" fill="#60A5FA"></circle>
+</svg>
