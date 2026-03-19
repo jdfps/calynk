@@ -1,22 +1,47 @@
 import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 import { router } from "expo-router";
+import { useAuth } from "../context/AuthContext";
+import { logout } from "../firebase/auth.js";
+
 import Logo from "../assets/Logo/logo2.pdf";
 
 const Header = () => {
+  const { userProfile, firebaseUser, loading } = useAuth();
+  const handleLogout = async () => {
+    try {
+      await logout();
+      router.replace("/");
+    } catch (error) {
+      console.log("Logout error:", error.message);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      {/* Logo (Top Center) */}
       <Image style={styles.logo} source={Logo} />
 
-      {/*Buttons on right*/}
       <View style={styles.buttonContainer}>
-        <Pressable onPress={() => router.push("/login")}>
-          <Text style={styles.buttonText}>Login</Text>
-        </Pressable>
+        {loading ? (
+          <Text style={styles.buttonText}>Loading...</Text>
+        ) : firebaseUser && userProfile ? (
+          <>
+            <Text style={styles.buttonText}>Hi, {userProfile.firstName}</Text>
 
-        <Pressable onPress={() => router.push("/signup")}>
-          <Text style={styles.buttonText}>Sign Up</Text>
-        </Pressable>
+            <Pressable onPress={handleLogout}>
+              <Text style={styles.buttonText}>Logout</Text>
+            </Pressable>
+          </>
+        ) : (
+          <>
+            <Pressable onPress={() => router.push("/login")}>
+              <Text style={styles.buttonText}>Login</Text>
+            </Pressable>
+
+            <Pressable onPress={() => router.push("/signup")}>
+              <Text style={styles.buttonText}>Sign Up</Text>
+            </Pressable>
+          </>
+        )}
       </View>
     </View>
   );
@@ -26,9 +51,10 @@ export default Header;
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 20,
     flex: 1,
-    alignItems: "center", // center logo horizontally
-    paddingTop: 5,
+    alignItems: "center",
+    paddingTop: 10,
   },
 
   logo: {
@@ -40,7 +66,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     position: "absolute",
     right: 20,
-    // top: 5,
     alignItems: "flex-end",
   },
 
