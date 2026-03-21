@@ -15,15 +15,15 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-  try {
-    const userCredential = await login(email, password);
-    console.log("Logged in user:", userCredential.user.uid);
-    router.replace("/");
-  } catch (error) {
-    console.log("Login error:", error.message);
-    Alert.alert("Login Failed", error.message);
-  }
-};
+    try {
+      const userCredential = await login(email, password);
+      console.log("Logged in user:", userCredential.user.uid);
+      router.replace("/");
+    } catch (error) {
+      console.log("Login error:", error.message);
+      Alert.alert("Login Failed", error.message);
+    }
+  };
 
   return (
     <View style={styles.container}>

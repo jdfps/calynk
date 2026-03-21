@@ -1,4 +1,12 @@
-import { StyleSheet, View, Text, Image, Pressable } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  Pressable,
+  Platform,
+  useWindowDimensions,
+} from "react-native";
 import { router } from "expo-router";
 import { useAuth } from "../context/AuthContext";
 import { logout } from "../firebase/auth.js";
@@ -7,6 +15,10 @@ import Logo from "../assets/Logo/logo2.pdf";
 
 const Header = () => {
   const { userProfile, firebaseUser, loading } = useAuth();
+  const { width } = useWindowDimensions();
+
+  const isTablet = width >= 768;
+
   const handleLogout = async () => {
     try {
       await logout();
@@ -17,10 +29,20 @@ const Header = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        isTablet ? styles.containerTablet : styles.containerPhone,
+      ]}
+    >
       <Image style={styles.logo} source={Logo} />
 
-      <View style={styles.buttonContainer}>
+      <View
+        style={[
+          styles.buttonContainer,
+          isTablet ? styles.buttonContainerTablet : styles.buttonContainerPhone,
+        ]}
+      >
         {loading ? (
           <Text style={styles.buttonText}>Loading...</Text>
         ) : firebaseUser && userProfile ? (
@@ -51,13 +73,24 @@ export default Header;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
-    flex: 1,
+    width: "100%",
+    paddingTop: Platform.OS === "ios" ? 50 : 25,
+    paddingHorizontal: 16,
+    paddingBottom: 10,
+    justifyContent: "center",
     alignItems: "center",
-    paddingTop: 10,
+  },
+
+  containerPhone: {
+    minHeight: 110,
+  },
+
+  containerTablet: {
+    minHeight: 120,
   },
 
   logo: {
+    marginTop: 10,
     height: 50,
     width: 50,
     resizeMode: "contain",
@@ -65,8 +98,17 @@ const styles = StyleSheet.create({
 
   buttonContainer: {
     position: "absolute",
-    right: 20,
     alignItems: "flex-end",
+  },
+
+  buttonContainerPhone: {
+    right: 16,
+    top: 58,
+  },
+
+  buttonContainerTablet: {
+    right: 24,
+    top: 55,
   },
 
   buttonText: {
